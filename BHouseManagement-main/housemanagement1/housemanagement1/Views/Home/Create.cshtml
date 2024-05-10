@@ -1,0 +1,69 @@
+﻿@model housemanagement1.CustomerAccount
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<body>
+
+    <section class="forms">
+        <div class="container">
+            <!-- logo -->
+            @*lugo pohon*@
+            <!-- //logo -->
+            <div class="forms-grid">
+
+                <!-- register -->
+                <div class="register">
+                    <span class="fas fa-user-circle"></span>
+                    <strong>Create account!</strong>
+
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "register-form", id = "registerForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <fieldset>
+                            <div class="form">
+                                <div class="form-row">
+                                    <span class="fas fa-user"></span>
+                                    <label class="form-label" for="Username">Username</label>
+                                    @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-text", @id = "Username" } })
+                                    @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-row">
+                                    <span class="fas fa-lock"></span>
+                                    <label class="form-label" for="Password">Password</label>
+                                    @Html.PasswordFor(model => model.password, new { @class = "form-text", @id = "Password" })
+                                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-row button-login">
+                                    <button type="button" class="btn btn-login" onclick="validateForm()">Create <span class="fas fa-arrow-right"></span></button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    }
+                    <span class="create-account">Or create account using social media!</span>
+                    <div class="social-media">
+                        <a href="#facebook" class="fb"><span class="fab fa-facebook"></span></a>
+                        <a href="#twitter" class="tw"><span class="fab fa-twitter"></span></a>
+                        <a href="#pinterest" class="pi"><span class="fab fa-pinterest"></span></a>
+                    </div>
+                </div>
+                <!-- //register -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function validateForm() {
+            var username = document.getElementById("Username").value;
+            var password = document.getElementById("Password").value;
+            if (username.trim() === "" || password.trim() === "") {
+                alert("Username and password are required.");
+            } else {
+                document.getElementById("registerForm").submit();
+            }
+        }
+    </script>
+
+</body>
