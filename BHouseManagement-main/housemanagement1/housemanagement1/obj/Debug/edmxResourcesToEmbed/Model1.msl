@@ -1,16 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="bhousemanagementModelStoreContainer" CdmEntityContainer="bhousemanagementEntities2">
-    <EntitySetMapping Name="AdminAccounts">
-      <EntityTypeMapping TypeName="bhousemanagementModel.AdminAccounts">
-        <MappingFragment StoreEntitySet="AdminAccounts">
-          <ScalarProperty Name="AdminId" ColumnName="AdminId" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
+  <EntityContainerMapping StorageEntityContainer="bhousemanagementModelStoreContainer" CdmEntityContainer="bhousemanagementEntities3">
     <EntitySetMapping Name="CustomerAccount">
       <EntityTypeMapping TypeName="bhousemanagementModel.CustomerAccount">
         <MappingFragment StoreEntitySet="CustomerAccount">
@@ -21,13 +11,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Payment">
-      <EntityTypeMapping TypeName="bhousemanagementModel.Payment">
-        <MappingFragment StoreEntitySet="Payment">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CardHolderName" ColumnName="CardHolderName" />
-          <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
-          <ScalarProperty Name="ExpiryMonth" ColumnName="ExpiryMonth" />
+    <EntitySetMapping Name="Payment3">
+      <EntityTypeMapping TypeName="bhousemanagementModel.Payment3">
+        <MappingFragment StoreEntitySet="Payment3">
+          <ScalarProperty Name="paymentId" ColumnName="paymentId" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Payment" ColumnName="Payment" />
           <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -62,7 +51,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="InsertReservation" FunctionName="bhousemanagementModel.Store.InsertReservation" />
+    <FunctionImportMapping FunctionImportName="InsertPayment2" FunctionName="bhousemanagementModel.Store.InsertPayment2" />
     <FunctionImportMapping FunctionImportName="MultiLogin1" FunctionName="bhousemanagementModel.Store.MultiLogin1">
       <ResultMapping>
         <ComplexTypeMapping TypeName="bhousemanagementModel.MultiLogin1_Result">
@@ -74,11 +63,9 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SavePayment1" FunctionName="bhousemanagementModel.Store.SavePayment1" />
-    <FunctionImportMapping FunctionImportName="usp_Login" FunctionName="bhousemanagementModel.Store.usp_Login" />
-    <FunctionImportMapping FunctionImportName="SavePayment" FunctionName="bhousemanagementModel.Store.SavePayment" />
-    <FunctionImportMapping FunctionImportName="sp_GetAllReservations" FunctionName="bhousemanagementModel.Store.sp_GetAllReservations">
+    <FunctionImportMapping FunctionImportName="sp_GetAllReservations_Result" FunctionName="bhousemanagementModel.Store.sp_GetAllReservations_Result">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="bhousemanagementModel.sp_GetAllReservations_Result">
+        <ComplexTypeMapping TypeName="bhousemanagementModel.sp_GetAllReservations_Result_Result">
           <ScalarProperty Name="ReservationId" ColumnName="ReservationId" />
           <ScalarProperty Name="RoomId" ColumnName="RoomId" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -87,5 +74,17 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="usp_Login" FunctionName="bhousemanagementModel.Store.usp_Login" />
+    <EntitySetMapping Name="AdminAccounts">
+      <EntityTypeMapping TypeName="bhousemanagementModel.AdminAccounts">
+        <MappingFragment StoreEntitySet="AdminAccounts">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="UpdateReservationStatus" FunctionName="bhousemanagementModel.Store.UpdateReservationStatus" />
   </EntityContainerMapping>
 </Mapping>

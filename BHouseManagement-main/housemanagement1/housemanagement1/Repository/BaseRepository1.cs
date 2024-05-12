@@ -13,6 +13,7 @@ namespace housemanagement1.Repository
         public DbContext _db;
         public DbSet<T> _table;
         public object id;
+        public object _reserveRepo;
 
         public DbSet<T> Table()
         {
@@ -21,7 +22,7 @@ namespace housemanagement1.Repository
 
         public BaseRepository1()
         {
-            _db = new bhousemanagementEntities2();
+            _db = new bhousemanagementEntities3();
             _table = _db.Set<T>();
         }
         public T Get(Object id)
@@ -63,44 +64,6 @@ namespace housemanagement1.Repository
                 return ErrorCode.Error;
             }
         }
-        public ErrorCode Update(T t)
-        {
-            try
-            {
-                var oldOjb = Get(id);
-                _db.Entry(oldOjb).CurrentValues.SetValues(t);
-                _db.SaveChanges();
-                return ErrorCode.Success;
-
-            }
-            catch (Exception ex)
-            {
-                return ErrorCode.Error;
-            }
-        }
-
-        public ErrorCode Update(object id, T t)
-        {
-            try
-            {
-                var existingEntity = Get(id);
-                if (existingEntity != null)
-                {
-                    _db.Entry(existingEntity).CurrentValues.SetValues(t);
-                    _db.SaveChanges();
-                    return ErrorCode.Success;
-                }
-                else
-                {
-                    return ErrorCode.Error; 
-                }
-            }
-            catch (Exception ex)
-            {
-            
-                return ErrorCode.Error;
-            }
-        }
 
         public ErrorCode Delete(object id)
         {
@@ -115,12 +78,12 @@ namespace housemanagement1.Repository
                 }
                 else
                 {
-                    return ErrorCode.Error; 
+                    return ErrorCode.Error;
                 }
             }
             catch (Exception ex)
             {
-   
+
                 return ErrorCode.Error;
             }
         }
@@ -129,5 +92,68 @@ namespace housemanagement1.Repository
         {
             throw new NotImplementedException();
         }
+
+        internal object GetById(int id)
+        {
+            throw new NotImplementedException();
+
+        }
+
+        internal void SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void Update(Reservations reserve)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ErrorCode Update(object id, T t)
+        {
+            try
+            {
+                var oldEntity = Get(id);
+                if (oldEntity != null)
+                {
+                    _db.Entry(oldEntity).CurrentValues.SetValues(t);
+                    _db.SaveChanges();
+                    return ErrorCode.Success;
+                }
+                else
+                {
+                    return ErrorCode.Error; // Return appropriate code if entity not found
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception appropriately
+                return ErrorCode.Error;
+            }
+        }
+
+        public ErrorCode Update(object id)
+        {
+            try
+            {
+                var entity = Get(id);
+                if (entity != null)
+                {
+                    _table.Remove(entity); // Assuming _table is your DbSet<T>
+                    _db.SaveChanges();
+                    return ErrorCode.Success;
+                }
+                else
+                {
+                    return ErrorCode.Error; // Return appropriate code if entity not found
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception appropriately
+                return ErrorCode.Error;
+            }
+        }
+
     }
 }

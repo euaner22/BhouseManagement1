@@ -18,15 +18,14 @@
     <Property Name="password" Type="nvarchar" MaxLength="50" />
     <Property Name="RoleId" Type="int" />
   </EntityType>
-  <EntityType Name="Payment">
+  <EntityType Name="Payment3">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="paymentId" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CardHolderName" Type="nvarchar" MaxLength="100" />
-    <Property Name="PaymentAmount" Type="int" />
-    <Property Name="ExpiryMonth" Type="nvarchar" MaxLength="50" />
-    <Property Name="PaymentDate" Type="datetime" />
+    <Property Name="paymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Payment" Type="int" />
+    <Property Name="PaymentDate" Type="date" />
   </EntityType>
   <EntityType Name="Reservations">
     <Key>
@@ -55,26 +54,25 @@
     <Property Name="Capacity" Type="int" />
     <Property Name="status" Type="varchar" MaxLength="50" />
   </EntityType>
-  <Function Name="InsertReservation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="StartTime" Type="datetime" Mode="In" />
-    <Parameter Name="EndTime" Type="datetime" Mode="In" />
-    <Parameter Name="RoomId" Type="int" Mode="In" />
+  <Function Name="InsertPayment2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CardHolderName" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="PaymentAmount" Type="int" Mode="In" />
+    <Parameter Name="ExpiryMonth" Type="date" Mode="In" />
   </Function>
   <Function Name="MultiLogin1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Username" Type="varchar" Mode="In" />
     <Parameter Name="Password" Type="varchar" Mode="In" />
-  </Function>
-  <Function Name="SavePayment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="CardHolderName" Type="nvarchar" Mode="In" />
-    <Parameter Name="PaymentAmount" Type="decimal" Mode="In" />
-    <Parameter Name="ExpiryMonth" Type="int" Mode="In" />
   </Function>
   <Function Name="SavePayment1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CardHolderName" Type="nvarchar" Mode="In" />
     <Parameter Name="PaymentAmount" Type="int" Mode="In" />
     <Parameter Name="ExpiryMonth" Type="nvarchar" Mode="In" />
   </Function>
-  <Function Name="sp_GetAllReservations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_GetAllReservations_Result" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="UpdateReservationStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ReservationId" Type="int" Mode="In" />
+    <Parameter Name="NewStatus" Type="nvarchar" Mode="In" />
+  </Function>
   <Function Name="usp_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Username" Type="nvarchar" Mode="In" />
     <Parameter Name="Password" Type="nvarchar" Mode="In" />
@@ -82,7 +80,7 @@
   <EntityContainer Name="bhousemanagementModelStoreContainer">
     <EntitySet Name="AdminAccounts" EntityType="Self.AdminAccounts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CustomerAccount" EntityType="Self.CustomerAccount" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payment3" EntityType="Self.Payment3" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reservations" EntityType="Self.Reservations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />

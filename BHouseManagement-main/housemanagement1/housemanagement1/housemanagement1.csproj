@@ -130,13 +130,26 @@
   <ItemGroup>
     <Content Include="Contents\css\bootstrap.min.css" />
     <Content Include="Contents\css\style.css" />
+    <Content Include="Contents\img\1.jpg" />
+    <Content Include="Contents\img\2.jpg" />
+    <Content Include="Contents\img\3.jpg" />
+    <Content Include="Contents\img\4.jpg" />
+    <Content Include="Contents\img\5.jpg" />
+    <Content Include="Contents\img\6.jpg" />
+    <Content Include="Contents\img\7.jpg" />
     <Content Include="Contents\img\about.jpg" />
     <Content Include="Contents\img\carousel-1.jpg" />
     <Content Include="Contents\img\carousel-2.jpg" />
     <Content Include="Contents\img\carousel-3.jpg" />
+    <Content Include="Contents\img\crea.jpg" />
     <Content Include="Contents\img\euan.jpg" />
     <Content Include="Contents\img\feature.jpg" />
     <Content Include="Contents\img\footer.jpg" />
+    <Content Include="Contents\img\hoho.jpg" />
+    <Content Include="Contents\img\hrhr.jpg" />
+    <Content Include="Contents\img\IMG_0452-scaled.jpg" />
+    <Content Include="Contents\img\kani.jpg" />
+    <Content Include="Contents\img\OIP.jpg" />
     <Content Include="Contents\img\portfolio-1.jpg" />
     <Content Include="Contents\img\portfolio-2.jpg" />
     <Content Include="Contents\img\portfolio-3.jpg" />
@@ -159,6 +172,7 @@
     <Content Include="Contents\img\testimonial-3.jpg" />
     <Content Include="Contents\img\testimonial-4.jpg" />
     <Content Include="Contents\img\wew.jpg" />
+    <Content Include="Contents\img\wewewewe.jpg" />
     <Content Include="Contents\js\main.js" />
     <Content Include="Contents\lib\animate\animate.css" />
     <Content Include="Contents\lib\animate\animate.min.css" />
@@ -299,6 +313,7 @@
     <Content Include="Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Contents\img\wewewewww.webp" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -316,6 +331,7 @@
     <Compile Include="Contracts\IBaseRepository.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReservationSuccessViewModel.cs" />
     <Compile Include="CustomerAccount.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -345,7 +361,7 @@
     <Compile Include="MultiLogin1_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Payment.cs">
+    <Compile Include="Payment3.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -359,7 +375,7 @@
     <Compile Include="Rooms.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="sp_GetAllReservations_Result.cs">
+    <Compile Include="sp_GetAllReservations_Result_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
   </ItemGroup>

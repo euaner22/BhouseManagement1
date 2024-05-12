@@ -12,12 +12,11 @@ namespace housemanagement1
     using System;
     using System.Collections.Generic;
     
-    public partial class Payment
+    public partial class Payment3
     {
-        public int Id { get; set; }
-        public string CardHolderName { get; set; }
-        public Nullable<int> PaymentAmount { get; set; }
-        public string ExpiryMonth { get; set; }
+        public int paymentId { get; set; }
+        public string UserName { get; set; }
+        public Nullable<int> Payment { get; set; }
         public Nullable<System.DateTime> PaymentDate { get; set; }
     }
 }

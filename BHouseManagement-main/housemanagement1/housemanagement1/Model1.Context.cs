@@ -15,10 +15,10 @@ namespace housemanagement1
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class bhousemanagementEntities2 : DbContext
+    public partial class bhousemanagementEntities3 : DbContext
     {
-        public bhousemanagementEntities2()
-            : base("name=bhousemanagementEntities2")
+        public bhousemanagementEntities3()
+            : base("name=bhousemanagementEntities3")
         {
         }
     
@@ -27,28 +27,28 @@ namespace housemanagement1
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AdminAccounts> AdminAccounts { get; set; }
         public virtual DbSet<CustomerAccount> CustomerAccount { get; set; }
-        public virtual DbSet<Payment> Payment { get; set; }
+        public virtual DbSet<Payment3> Payment3 { get; set; }
         public virtual DbSet<Reservations> Reservations { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Rooms> Rooms { get; set; }
+        public virtual DbSet<AdminAccounts> AdminAccounts { get; set; }
     
-        public virtual int InsertReservation(Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, Nullable<int> roomId)
+        public virtual int InsertPayment2(string cardHolderName, Nullable<int> paymentAmount, Nullable<System.DateTime> expiryMonth)
         {
-            var startTimeParameter = startTime.HasValue ?
-                new ObjectParameter("StartTime", startTime) :
-                new ObjectParameter("StartTime", typeof(System.DateTime));
+            var cardHolderNameParameter = cardHolderName != null ?
+                new ObjectParameter("CardHolderName", cardHolderName) :
+                new ObjectParameter("CardHolderName", typeof(string));
     
-            var endTimeParameter = endTime.HasValue ?
-                new ObjectParameter("EndTime", endTime) :
-                new ObjectParameter("EndTime", typeof(System.DateTime));
+            var paymentAmountParameter = paymentAmount.HasValue ?
+                new ObjectParameter("PaymentAmount", paymentAmount) :
+                new ObjectParameter("PaymentAmount", typeof(int));
     
-            var roomIdParameter = roomId.HasValue ?
-                new ObjectParameter("RoomId", roomId) :
-                new ObjectParameter("RoomId", typeof(int));
+            var expiryMonthParameter = expiryMonth.HasValue ?
+                new ObjectParameter("ExpiryMonth", expiryMonth) :
+                new ObjectParameter("ExpiryMonth", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertReservation", startTimeParameter, endTimeParameter, roomIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertPayment2", cardHolderNameParameter, paymentAmountParameter, expiryMonthParameter);
         }
     
         public virtual ObjectResult<MultiLogin1_Result> MultiLogin1(string username, string password)
@@ -81,6 +81,11 @@ namespace housemanagement1
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SavePayment1", cardHolderNameParameter, paymentAmountParameter, expiryMonthParameter);
         }
     
+        public virtual ObjectResult<sp_GetAllReservations_Result_Result> sp_GetAllReservations_Result()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetAllReservations_Result_Result>("sp_GetAllReservations_Result");
+        }
+    
         public virtual int usp_Login(string username, string password)
         {
             var usernameParameter = username != null ?
@@ -94,26 +99,17 @@ namespace housemanagement1
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Login", usernameParameter, passwordParameter);
         }
     
-        public virtual int SavePayment(string cardHolderName, Nullable<decimal> paymentAmount, Nullable<int> expiryMonth)
+        public virtual int UpdateReservationStatus(Nullable<int> reservationId, string newStatus)
         {
-            var cardHolderNameParameter = cardHolderName != null ?
-                new ObjectParameter("CardHolderName", cardHolderName) :
-                new ObjectParameter("CardHolderName", typeof(string));
+            var reservationIdParameter = reservationId.HasValue ?
+                new ObjectParameter("ReservationId", reservationId) :
+                new ObjectParameter("ReservationId", typeof(int));
     
-            var paymentAmountParameter = paymentAmount.HasValue ?
-                new ObjectParameter("PaymentAmount", paymentAmount) :
-                new ObjectParameter("PaymentAmount", typeof(decimal));
+            var newStatusParameter = newStatus != null ?
+                new ObjectParameter("NewStatus", newStatus) :
+                new ObjectParameter("NewStatus", typeof(string));
     
-            var expiryMonthParameter = expiryMonth.HasValue ?
-                new ObjectParameter("ExpiryMonth", expiryMonth) :
-                new ObjectParameter("ExpiryMonth", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SavePayment", cardHolderNameParameter, paymentAmountParameter, expiryMonthParameter);
-        }
-    
-        public virtual ObjectResult<sp_GetAllReservations_Result> sp_GetAllReservations()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_GetAllReservations_Result>("sp_GetAllReservations");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateReservationStatus", reservationIdParameter, newStatusParameter);
         }
     }
 }

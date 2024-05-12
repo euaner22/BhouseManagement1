@@ -7,11 +7,13 @@ namespace housemanagement1.Models
 {
     public class Payment
     {
-        public int Id { get; set; }
-        public string CardHolderName { get; set; }
-        public decimal PaymentAmount { get; set; }
-        public int ExpiryMonth { get; set; }
+    
+            public int Id { get; set; }
+            public string Username { get; set; }
+            //public decimal Payment { get; set; }
+            public DateTime PaymentDate { get; set; }
+        }
+
 
     }
 
-}

@@ -7,6 +7,6 @@ namespace housemanagement1
 {
     public class ListModel
     {
-        public List<sp_GetAllReservations_Result> allReservations { get; set; }
+        public List<sp_GetAllReservations_Result_Result> allReservations { get; set; }
     }
 }

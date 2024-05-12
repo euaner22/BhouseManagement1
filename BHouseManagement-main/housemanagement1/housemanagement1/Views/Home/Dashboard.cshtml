@@ -1,4 +1,4 @@
-﻿@model IEnumerable<housemanagement1.CustomerAccount>
+﻿﻿@model IEnumerable<housemanagement1.CustomerAccount>
 
 @{
     ViewBag.Title = "Rooms";
@@ -14,7 +14,8 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-image: url('../../Contents/img/hrhr.jpg');
+            background-size: cover;
         }
 
         .container {
@@ -22,6 +23,7 @@
             margin: 0 auto;
             padding: 20px;
             position: relative;
+            
         }
 
         .room-slider {
@@ -83,14 +85,14 @@
             }
 
         .status {
-            background-color: #28a745; 
+            background-color: #28a745;
             color: #fff;
             padding: 5px 10px;
             border-radius: 5px;
         }
 
         .unavailable {
-            background-color: #dc3545; 
+            background-color: #dc3545;
         }
 
         .arrow-button {
@@ -135,7 +137,7 @@
 
             .reservation-form input[type="text"],
             .reservation-form input[type="date"] {
-                width: calc(100% - 12px); 
+                width: calc(100% - 12px);
                 padding: 5px;
                 margin-bottom: 10px;
                 border: 1px solid #ccc;
@@ -167,32 +169,54 @@
 
 
             .reserve-input:checked ~ .room-details .status {
-                background-color: #dc3545; 
+                background-color: #dc3545;
             }
 
                 .reserve-input:checked ~ .room-details .status:after {
                     content: "Unavailable";
                 }
+
+                /* Button styling */
+        .btn-logout {
+            position: absolute;
+            top: 20px; /* Adjust the distance from the top */
+            right: 20px; /* Adjust the distance from the right */
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            z-index: 999; /* Ensure the button is on top */
+        }
+
+        .btn-logout:hover {
+            background-color: #0056b3;
+        }
     </style>
 
 </head>
 <body>
     <div class="container">
         <h2>@ViewBag.Title</h2>
+        <a href="@Url.Action("Login", "Home")" class="btn-logout">Logout</a>
         <button class="arrow-button prev-button" onclick="scrollRooms(-350)">&#10094;</button>
         <div class="room-slider">
             @for (var i = 1; i <= 6; i++)
             {
                 <div class="room-card">
-                    <div class="room-image"></div>
+                    <div class="room-image">
+                        <img src="~/Contents/img/1.jpg" alt="Room @i Image" class="room-image">
+                    </div>
                     <div class="room-details">
                         <h3 class="room-title">Room @i</h3>
                         <p class="room-description">This is a description of Room @i.</p>
                         <p class="room-price">$@(400 + i * 100) per month</p>
-             
+
                         <input type="checkbox" id="reserve-input-@i" class="reserve-input" />
                         <label for="reserve-input-@i" class="reserve-button">Reserve</label>
-                   
+
                         <form id="reservation-form-@i" class="reservation-form"
                               action="@Url.Action("Reserve", "Home")" method="post">
                             @Html.AntiForgeryToken()
@@ -203,7 +227,7 @@
                             <input type="date" id="reserve-date-@i" name="ReserveDate" required>
                             <input type="submit" value="Save" class="reserve-button">
                         </form>
-               
+
                         <div class="status">Available</div>
                     </div>
                 </div>

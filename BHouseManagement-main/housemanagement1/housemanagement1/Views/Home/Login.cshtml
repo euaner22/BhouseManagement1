@@ -4,8 +4,50 @@
     ViewBag.Title = "Login";
 }
 
-<body>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url('../../Contents/img/crea.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 0;
+        padding: 0;
+    }
 
+    /* Container for Welcome text and button */
+    .welcome-container {
+        position: relative;
+        margin-top: 50px; /* Adjust the margin as needed */
+        text-align: center;
+    }
+
+    /* Welcome text styling */
+    .welcome-text {
+        font-size: 24px; /* Adjust the font size as needed */
+        color: white;
+    }
+
+    /* Button styling */
+    /* Button styling */
+    .btn-home {
+        margin: 10px ;
+        left: 10px;
+        top: 5px;
+        padding: 10px 10px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-home:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<body>
     <section class="forms">
         <div class="container">
             <!-- logo -->
@@ -13,7 +55,9 @@
 
             </div>
             <!-- //logo -->
+            <a href="@Url.Action("Index", "Home")" class="btn-home">Home</a>
             <div class="forms-grid">
+               
 
                 <!-- login -->
                 <div class="login">
@@ -37,13 +81,7 @@
                                     <label class="form-label" for="Password">Password</label>
                                     @Html.PasswordFor(model => model.Password, new { @class = "form-text", id = "Password" })
                                 </div>
-                                <div class="form-row bottom">
-                                    <div class="form-check">
-                                        <input type="checkbox" id="remember" name="remember" value="remember" class="form-check-input">
-                                        <label for="remember" class="form-check-label">Remember me?</label>
-                                    </div>
-                                    <a href="#" class="forgot">Forgot password?</a>
-                                </div>
+
                                 <div class="form-row button-login">
                                     <button type="button" class="btn btn-login" onclick="validateForm()">Login <span class="fas fa-arrow-right"></span></button>
                                 </div>
@@ -51,8 +89,9 @@
                         </fieldset>
                     }
                 </div>
-                <!-- //login -->
-            </div>
+
+
+
         </div>
     </section>
 
@@ -67,5 +106,4 @@
             }
         }
     </script>
-
 </body>

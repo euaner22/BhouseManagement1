@@ -9,13 +9,17 @@ namespace housemanagement1.Controllers
 {
     public class BaseController : Controller
     {
-        public bhousemanagementEntities2 _db;
+        public bhousemanagementEntities3 _db;
         public BaseRepository1<CustomerAccount> _userRepo;
+        public BaseRepository1<Reservations> _reserveRepo;
+        public BaseRepository1<Payment3> _paymentRepo;
 
         public BaseController()
         {
-            _db = new bhousemanagementEntities2();
-            _userRepo = new BaseRepository1<CustomerAccount>();   
+            _db = new bhousemanagementEntities3();
+            _userRepo = new BaseRepository1<CustomerAccount>();
+            _reserveRepo = new BaseRepository1<Reservations>();
+            _paymentRepo = new BaseRepository1<Payment3>();
         }
 
     }

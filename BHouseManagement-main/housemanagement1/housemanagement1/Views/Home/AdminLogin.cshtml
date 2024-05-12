@@ -3,12 +3,79 @@
 @{
     ViewBag.Title = "AdminLogin";
 }
+<style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        background-image: url('../../Contents/img/OIP.jpg');
+        background-size: cover;
+        font-family: Arial, sans-serif;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin: 0;
+        padding: 0;
+        color: gold;
+    }
 
-<h2>AdminLogin</h2>
+
+        .table th {
+            background-color: rgba(0, 0, 0, 0.5);
+            text-align: left;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+
+        .table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+
+        .table tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+    .action-link {
+        text-decoration: none;
+        color: #4CAF50;
+        margin-right: 5px;
+        transition: color 0.3s ease;
+    }
+
+        .action-link:hover {
+            color: #45a049;
+        }
+
+    .btn-logout {
+        margin: 10px;
+        right: 15px;
+        top: 5px;
+        padding: 10px 10px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-home:hover {
+            background-color: #0056b3;
+        }
+
+
+</style>
+
+<a href="@Url.Action("Login", "Home")" class="btn-logout">Logout</a>
+
+<h2>Admin Dashboard</h2>      
+
+
 
 @*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
 <table class="table">
     <tr>
         <th>
@@ -29,29 +96,29 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReservationId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoomId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReserveDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReserveDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("Confirm", "Edit", new { id = item.ReservationId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ReservationId })
+            </td>
+        </tr>
+    }
 
 </table>

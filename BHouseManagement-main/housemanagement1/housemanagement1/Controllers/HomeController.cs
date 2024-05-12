@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Mvc;
@@ -11,12 +12,14 @@ using housemanagement1.Contracts;
 using System.Data.Entity;
 using System.Web.Helpers;
 using housemanagement1.Models;
+using System.Net;
+using System.Runtime.Remoting.Contexts;
 
 namespace housemanagement1.Controllers
 {
     public class HomeController : BaseController
     {
-        private bhousemanagementEntities2 db = new bhousemanagementEntities2();
+        private bhousemanagementEntities3 db = new bhousemanagementEntities3();
 
         private readonly BaseRepository1<Reservations> _reservationRepo;
 
@@ -93,7 +96,7 @@ namespace housemanagement1.Controllers
             var getAllReservation = _reservationRepo.GetAll();
             return View(getAllReservation);
         }
-
+  
 
 
 
@@ -144,95 +147,89 @@ namespace housemanagement1.Controllers
 
 
 
-        //[HttpPost]
-        //public ActionResult Payment(Payment model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            // Set the PaymentDate to the current date and time
-        //            model.PaymentDate = DateTime.Now;
-
-        //            using (var db = new bhousemanagementEntities())
-        //            {
-        //                // Call the stored procedure to save payment
-        //                db.Database.ExecuteSqlCommand("EXEC SavePayment1 @CardHolderName, @PaymentAmount, @ExpiryMonth",
-        //                    new SqlParameter("@CardHolderName", model.CardHolderName),
-        //                    new SqlParameter("@PaymentAmount", model.PaymentAmount),
-        //                    new SqlParameter("@ExpiryMonth", model.ExpiryMonth)
-        //                );
-        //            }
-
-        //            TempData["Msg"] = "Payment successfully saved!";
-        //            return RedirectToAction("Dashboard");
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            // Log the exception for debugging
-        //            Console.WriteLine(ex.Message);
-        //            ModelState.AddModelError("", "An error occurred while saving the payment.");
-        //            return View(model);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        // If the model state is not valid, return the view with the model to display validation errors
-        //        return View(model);
-        //    }
-        //}
-
-
-
-
-
-
-
-
-
-
-
-
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                TempData["ErrorMsg"] = "User ID is required.";
-                return RedirectToAction("Index");
-            }
-
-            var user = _userRepo.Get(id.Value);
-
-            if (user == null)
-            {
-                TempData["ErrorMsg"] = "User not found.";
-                return RedirectToAction("Index");
-            }
-
-            return View(user);
-        }
-
-        public ActionResult Edit(int id)
-        {
-            return View(_userRepo.Get(id));
-        }
-
         [HttpPost]
-        public ActionResult Edit(CustomerAccount u)
+        public ActionResult savePayment(Payment3 payment)
         {
-            _userRepo.Update(u.id, u);
-            TempData["Msg"] = $"User {u.username} Updated!";
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    string username = payment.UserName;
+
+
+                    //Payment.Status = "Pending";
+
+
+                    db.Payment3.Add(payment);
+                    db.SaveChanges();
+
+                    TempData["Msg"] = "Payment successfully saved!";
+                    return RedirectToAction("ReservationSuccess");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "An error occurred while saving the reservation.");
+
+                    return View(payment);
+                }
+            }
+            else
+            {
+
+                return View("Index", payment);
+            }
         }
+        public ActionResult Payment(Payment3 payment)
+        {
+            return View();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        public ActionResult Details()
+        {
+        
+
+            return View();
+        }
+
+
+
+        public ActionResult Edit(Reservations reserve)
+        {
+ 
+            _db.UpdateReservationStatus(reserve.ReservationId, reserve.Status);
+
+
+            return View();
+        }
+
+
+
 
         public ActionResult Delete(int id)
         {
-            _userRepo.Delete(id);
-            TempData["Msg"] = $"User Deleted!";
-
-            return RedirectToAction("Index");
+            var result = _reserveRepo.Delete(id);
+            if (result == ErrorCode.Success)
+            {
+                TempData["Msg"] = $"Reservation with ID {id} Deleted!";
+            }
+            else
+            {
+                TempData["ErrorMsg"] = $"Failed to delete reservation with ID {id}.";
+            }
+            return RedirectToAction("AdminLogin");
         }
-
 
     }
 }

@@ -11,7 +11,7 @@ namespace housemanagement1
 {
     using System;
     
-    public partial class sp_GetAllReservations_Result
+    public partial class sp_GetAllReservations_Result_Result
     {
         public int ReservationId { get; set; }
         public Nullable<int> RoomId { get; set; }

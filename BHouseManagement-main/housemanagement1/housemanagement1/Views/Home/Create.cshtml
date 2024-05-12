@@ -4,6 +4,29 @@
     ViewBag.Title = "Create";
 }
 
+<style>
+    body {
+        background-image: url('../../Contents/img/hoho.jpg');
+    }
+
+    /* Button styling */
+    .btn-home {
+        margin: 10px ;
+        left: 10px;
+        top: 5px;
+        padding: 10px 10px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-home:hover {
+            background-color: #0056b3;
+        }
+</style>
+
 <body>
 
     <section class="forms">
@@ -11,7 +34,10 @@
             <!-- logo -->
             @*lugo pohon*@
             <!-- //logo -->
+            <a href="@Url.Action("Index", "Home")" class="btn-home">Home</a>
             <div class="forms-grid">
+
+                <!-- Home button -->
 
                 <!-- register -->
                 <div class="register">
@@ -42,12 +68,6 @@
                             </div>
                         </fieldset>
                     }
-                    <span class="create-account">Or create account using social media!</span>
-                    <div class="social-media">
-                        <a href="#facebook" class="fb"><span class="fab fa-facebook"></span></a>
-                        <a href="#twitter" class="tw"><span class="fab fa-twitter"></span></a>
-                        <a href="#pinterest" class="pi"><span class="fab fa-pinterest"></span></a>
-                    </div>
                 </div>
                 <!-- //register -->
             </div>

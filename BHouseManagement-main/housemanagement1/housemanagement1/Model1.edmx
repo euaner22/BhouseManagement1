@@ -23,15 +23,14 @@
           <Property Name="password" Type="nvarchar" MaxLength="50" />
           <Property Name="RoleId" Type="int" />
         </EntityType>
-        <EntityType Name="Payment">
+        <EntityType Name="Payment3">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="paymentId" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CardHolderName" Type="nvarchar" MaxLength="100" />
-          <Property Name="PaymentAmount" Type="int" />
-          <Property Name="ExpiryMonth" Type="nvarchar" MaxLength="50" />
-          <Property Name="PaymentDate" Type="datetime" />
+          <Property Name="paymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Payment" Type="int" />
+          <Property Name="PaymentDate" Type="date" />
         </EntityType>
         <EntityType Name="Reservations">
           <Key>
@@ -60,26 +59,25 @@
           <Property Name="Capacity" Type="int" />
           <Property Name="status" Type="varchar" MaxLength="50" />
         </EntityType>
-        <Function Name="InsertReservation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="StartTime" Type="datetime" Mode="In" />
-          <Parameter Name="EndTime" Type="datetime" Mode="In" />
-          <Parameter Name="RoomId" Type="int" Mode="In" />
+        <Function Name="InsertPayment2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CardHolderName" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PaymentAmount" Type="int" Mode="In" />
+          <Parameter Name="ExpiryMonth" Type="date" Mode="In" />
         </Function>
         <Function Name="MultiLogin1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Username" Type="varchar" Mode="In" />
           <Parameter Name="Password" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="SavePayment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CardHolderName" Type="nvarchar" Mode="In" />
-          <Parameter Name="PaymentAmount" Type="decimal" Mode="In" />
-          <Parameter Name="ExpiryMonth" Type="int" Mode="In" />
         </Function>
         <Function Name="SavePayment1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CardHolderName" Type="nvarchar" Mode="In" />
           <Parameter Name="PaymentAmount" Type="int" Mode="In" />
           <Parameter Name="ExpiryMonth" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="sp_GetAllReservations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GetAllReservations_Result" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateReservationStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReservationId" Type="int" Mode="In" />
+          <Parameter Name="NewStatus" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="usp_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Username" Type="nvarchar" Mode="In" />
           <Parameter Name="Password" Type="nvarchar" Mode="In" />
@@ -87,7 +85,7 @@
         <EntityContainer Name="bhousemanagementModelStoreContainer">
           <EntitySet Name="AdminAccounts" EntityType="Self.AdminAccounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerAccount" EntityType="Self.CustomerAccount" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment3" EntityType="Self.Payment3" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reservations" EntityType="Self.Reservations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
@@ -96,15 +94,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bhousemanagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="AdminAccounts">
-          <Key>
-            <PropertyRef Name="AdminId" />
-          </Key>
-          <Property Name="AdminId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RoleId" Type="Int32" />
-        </EntityType>
         <EntityType Name="CustomerAccount">
           <Key>
             <PropertyRef Name="id" />
@@ -114,15 +103,14 @@
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RoleId" Type="Int32" />
         </EntityType>
-        <EntityType Name="Payment">
+        <EntityType Name="Payment3">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="paymentId" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CardHolderName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PaymentAmount" Type="Int32" />
-          <Property Name="ExpiryMonth" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PaymentDate" Type="DateTime" Precision="3" />
+          <Property Name="paymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Payment" Type="Int32" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Reservations">
           <Key>
@@ -151,17 +139,16 @@
           <Property Name="Capacity" Type="Int32" />
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="bhousemanagementEntities2" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AdminAccounts" EntityType="Self.AdminAccounts" />
+        <EntityContainer Name="bhousemanagementEntities3" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CustomerAccount" EntityType="Self.CustomerAccount" />
-          <EntitySet Name="Payment" EntityType="Self.Payment" />
+          <EntitySet Name="Payment3" EntityType="Self.Payment3" />
           <EntitySet Name="Reservations" EntityType="Self.Reservations" />
           <EntitySet Name="Roles" EntityType="Self.Roles" />
           <EntitySet Name="Rooms" EntityType="Self.Rooms" />
-          <FunctionImport Name="InsertReservation">
-            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
-            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
-            <Parameter Name="RoomId" Mode="In" Type="Int32" />
+          <FunctionImport Name="InsertPayment2">
+            <Parameter Name="CardHolderName" Mode="In" Type="String" />
+            <Parameter Name="PaymentAmount" Mode="In" Type="Int32" />
+            <Parameter Name="ExpiryMonth" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="MultiLogin1" ReturnType="Collection(bhousemanagementModel.MultiLogin1_Result)">
             <Parameter Name="Username" Mode="In" Type="String" />
@@ -172,16 +159,16 @@
             <Parameter Name="PaymentAmount" Mode="In" Type="Int32" />
             <Parameter Name="ExpiryMonth" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_GetAllReservations_Result" ReturnType="Collection(bhousemanagementModel.sp_GetAllReservations_Result_Result)" />
           <FunctionImport Name="usp_Login">
             <Parameter Name="Username" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SavePayment">
-            <Parameter Name="CardHolderName" Mode="In" Type="String" />
-            <Parameter Name="PaymentAmount" Mode="In" Type="Decimal" />
-            <Parameter Name="ExpiryMonth" Mode="In" Type="Int32" />
+          <EntitySet Name="AdminAccounts" EntityType="bhousemanagementModel.AdminAccounts" />
+          <FunctionImport Name="UpdateReservationStatus">
+            <Parameter Name="ReservationId" Mode="In" Type="Int32" />
+            <Parameter Name="NewStatus" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="sp_GetAllReservations" ReturnType="Collection(bhousemanagementModel.sp_GetAllReservations_Result)" />
         </EntityContainer>
         <ComplexType Name="MultiLogin1_Result">
           <Property Type="String" Name="AccountType" Nullable="false" MaxLength="5" />
@@ -189,29 +176,28 @@
           <Property Type="String" Name="Username" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="RoleId" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="sp_GetAllReservations_Result">
+        <ComplexType Name="sp_GetAllReservations_Result_Result">
           <Property Type="Int32" Name="ReservationId" Nullable="false" />
           <Property Type="Int32" Name="RoomId" Nullable="true" />
           <Property Type="String" Name="UserName" Nullable="true" MaxLength="100" />
           <Property Type="DateTime" Name="ReserveDate" Nullable="true" />
           <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="AdminAccounts">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="bhousemanagementModelStoreContainer" CdmEntityContainer="bhousemanagementEntities2">
-          <EntitySetMapping Name="AdminAccounts">
-            <EntityTypeMapping TypeName="bhousemanagementModel.AdminAccounts">
-              <MappingFragment StoreEntitySet="AdminAccounts">
-                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+        <EntityContainerMapping StorageEntityContainer="bhousemanagementModelStoreContainer" CdmEntityContainer="bhousemanagementEntities3">
           <EntitySetMapping Name="CustomerAccount">
             <EntityTypeMapping TypeName="bhousemanagementModel.CustomerAccount">
               <MappingFragment StoreEntitySet="CustomerAccount">
@@ -222,13 +208,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Payment">
-            <EntityTypeMapping TypeName="bhousemanagementModel.Payment">
-              <MappingFragment StoreEntitySet="Payment">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CardHolderName" ColumnName="CardHolderName" />
-                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
-                <ScalarProperty Name="ExpiryMonth" ColumnName="ExpiryMonth" />
+          <EntitySetMapping Name="Payment3">
+            <EntityTypeMapping TypeName="bhousemanagementModel.Payment3">
+              <MappingFragment StoreEntitySet="Payment3">
+                <ScalarProperty Name="paymentId" ColumnName="paymentId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
                 <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -263,7 +248,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="InsertReservation" FunctionName="bhousemanagementModel.Store.InsertReservation" />
+          <FunctionImportMapping FunctionImportName="InsertPayment2" FunctionName="bhousemanagementModel.Store.InsertPayment2" />
           <FunctionImportMapping FunctionImportName="MultiLogin1" FunctionName="bhousemanagementModel.Store.MultiLogin1">
             <ResultMapping>
               <ComplexTypeMapping TypeName="bhousemanagementModel.MultiLogin1_Result">
@@ -275,11 +260,9 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SavePayment1" FunctionName="bhousemanagementModel.Store.SavePayment1" />
-          <FunctionImportMapping FunctionImportName="usp_Login" FunctionName="bhousemanagementModel.Store.usp_Login" />
-          <FunctionImportMapping FunctionImportName="SavePayment" FunctionName="bhousemanagementModel.Store.SavePayment" />
-          <FunctionImportMapping FunctionImportName="sp_GetAllReservations" FunctionName="bhousemanagementModel.Store.sp_GetAllReservations">
+          <FunctionImportMapping FunctionImportName="sp_GetAllReservations_Result" FunctionName="bhousemanagementModel.Store.sp_GetAllReservations_Result">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="bhousemanagementModel.sp_GetAllReservations_Result">
+              <ComplexTypeMapping TypeName="bhousemanagementModel.sp_GetAllReservations_Result_Result">
                 <ScalarProperty Name="ReservationId" ColumnName="ReservationId" />
                 <ScalarProperty Name="RoomId" ColumnName="RoomId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -288,6 +271,18 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_Login" FunctionName="bhousemanagementModel.Store.usp_Login" />
+          <EntitySetMapping Name="AdminAccounts">
+            <EntityTypeMapping TypeName="bhousemanagementModel.AdminAccounts">
+              <MappingFragment StoreEntitySet="AdminAccounts">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UpdateReservationStatus" FunctionName="bhousemanagementModel.Store.UpdateReservationStatus" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
